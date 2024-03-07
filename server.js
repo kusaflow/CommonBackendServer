@@ -12,13 +12,15 @@ app.use(Cors())
 app.use(express.json());
 app.use(_errorhandler);
 
-connectDB();
+connectDB(process.env.MONGO_URI);
+//connectDB(process.env.MONGO_URI_notes);
 
 app.get('/', (req, res) => {
     res.send('Server is running');
   });
 app.use('/api/task', require('./routes/Task_mngr/taskRoute'));
 app.use("/api/users", require("./routes/UserRoutes"));
+app.use("/api/notes", require("./routes/notes/NotesRoutes"));
 
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`);
