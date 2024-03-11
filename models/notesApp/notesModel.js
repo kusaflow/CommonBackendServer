@@ -17,6 +17,10 @@ const notesModel = new mongoose.Schema({
         type: String,
         required: true,
         trim: true 
+    },
+    tag: {
+        type: String,
+        trim: true
     }
 
 },{

@@ -14,16 +14,21 @@ const getnotes = asyncHandler(async (req, res) => {
 //routes POST /api/notes
 //access private
 const Addnote = asyncHandler(async (req, res) => {
-    const {title, content} = req.body;
+    const {title, content, tag} = req.body;
     if(!title || !content){
         res.status(400);
         throw new Error("Please fill all the fields");
+    }
+
+    if (!tag){
+        tag = "Personal";
     }
     
     const newNote = await Note.create({
         user_id: req.user.id,
         title,
         content,
+        tag
     }); 
 
     //save
@@ -35,7 +40,7 @@ const Addnote = asyncHandler(async (req, res) => {
 //routes PUT /api/notes/:id
 //access private
 const updateNote = asyncHandler(async (req, res) => {
-    const {title, content} = req.body;
+    const {title, content, tag} = req.body;
     if(!title || !content){
         res.status(400);
         throw new Error("Please fill all the fields");
@@ -50,7 +55,8 @@ const updateNote = asyncHandler(async (req, res) => {
 
     const updatedContact = await Note.findByIdAndUpdate(req.params.id, {
         title,
-        content
+        content,
+        tag
     }, {new:true});
 
 
